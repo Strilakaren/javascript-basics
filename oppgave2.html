@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oppgave 4.1 - Miaow Miaow møter fisken</title>
+    <link rel="stylesheet" href="css/oppgave2.css" type="text/css">
+</head>
+<body>
+    
+    <div id="menu-container">
+        <!--Lager onclicks som linker til funksjoner i javascript-->
+        <input id="move-left-btn" type="button" value="Venstre" onclick="moveLeft()">
+        <input id="move-up-btn" type="button" value="Opp" onclick="moveUp()">
+        <input id="move-right-btn" type="button" value="Høyre" onclick="moveRight()">
+        <input id="move-down-btn" type="button" value="Ned" onclick="moveDown()">
+
+    </div>
+    <div id="game-container">
+        <p>Antall steg: <span id="number-of-steps-span">0</span></p>
+        <img id="miaow-miaow" src="images/miaow-miaow.png">
+        <button onclick="blubbBlubb()">
+            <img id="the-mighty-fish" src="images/fish.png">
+        </button>
+        <h2 id="fish-room-title">Fiskens rom</h2>
+        <div id="line-div"></div>
+    </div>
+    <div id="dialogue-output-div">
+        <p>Miaow Miaow: <span id="miaow-miaow-says">...</span></p>
+        <p>Fisken: <span id="fish-says">...</span></p>
+    </div>
+
+    <script>
+        /*Variabler vi trenger for å bevege katten*/
+        var moveFromTop = 0;
+        var left = 0;
+
+        /*Arrays for spørsmål til fisken, og svar fra fisken*/
+        var miaowMiaowArray = ["miaow?", "miaow miaoowww?", "miaooooooow?", "miaowmiaowmiaow?", "miaowmiaowmiaaaoow?"];
+        var blubbBlubbArray = ["blubb blubb", "BLUBB", "blubb blubb", "BLUUUBB", "blubb blubb blubb blubb blubb!"];
+
+        /*Henter html-elementer*/
+        var cat = document.getElementById("miaow-miaow");
+        var catQuestion = document.getElementById("miaow-miaow-says");
+        var fishAnswer = document.getElementById("fish-says");
+
+        /*Funksjoner for å flytte på katten*/
+        function moveRight() {
+            left += 50;
+            cat.style.left = `${left}px`;
+            tooClose();    
+        }
+        function moveLeft() {
+            if(left > 0) {
+                left -= 50;
+                cat.style.left = `${left}px`;
+            }
+            console.log(left)
+        }
+        function moveUp() {
+            moveFromTop -= 50;
+            cat.style.top = `${moveFromTop}px`;
+            console.log(moveFromTop)
+        }
+        function moveDown() {
+            moveFromTop += 50;
+            cat.style.top = `${moveFromTop}px`;
+            console.log(moveFromTop)
+        }
+
+        /*Stiller og svarer tilfeldige spørsmål til fisken*/
+        function blubbBlubb() {
+            if(left >= 600) {
+            var fishRandom = Math.floor(Math.random() * 5)
+            var catRandom = Math.floor(Math.random() * 5)
+            fishAnswer.innerHTML = blubbBlubbArray[fishRandom];
+            catQuestion.innerHTML = miaowMiaowArray[catRandom];
+            }
+            else {
+                fishAnswer.innerHTML = `HÆÆÆÆÆÆÆ? HVA SIER DUUU??`;
+                console.log(fishAnswer.innerHTML);
+            }
+        }
+
+        /*Sender katten tilbake til start når den kommer for nærmt fisken*/
+        function tooClose() {
+            if(left > 700) {
+                left = 0;
+                moveFromTop = 0;
+                cat.style.left = `${left}px`;
+                cat.style.top = `${moveFromTop}px`;
+                fishAnswer.innerHTML = `Liker ikke for pågående katta, shoo`;
+            }
+        }
+    </script>
+    
+</body>
+</html>
